@@ -148,7 +148,7 @@ export const ConnectWalletButton = () => {
     }
 
     try {
-      const response = await fetch('https://est-94xx.onrender.com/claim', {
+      const response = await fetch('https://est-94xx.onrender.com:4000/claimtoken', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

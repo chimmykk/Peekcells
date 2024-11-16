@@ -240,10 +240,10 @@ export const ConnectWalletButton = () => {
               <LoadingPixel />
             ) : (
               <>
-                <p className="font-pixel text-white mb-6 leading-relaxed">
-                  Get ready for something special! The Mini Ape Chain Burn Event is your chance to exchange 
-                  your Mini Ape Chain NFTs for exclusive rewards while celebrating the Minis' arrival on Ape Chain.
-                </p>
+            <p className="font-pixel text-white mb-6 leading-relaxed">
+  Get ready for something special! The Mini Ape Chain Burn Event is your chance to exchange
+  your Mini Ape Chain NFTs for exclusive rewards while celebrating the Minis&apos; arrival on Ape Chain.
+</p>
 
                 <div className="space-y-8">
                   <div className="bg-purple-900 bg-opacity-50 p-6 rounded-lg border border-purple-400">
@@ -267,9 +267,9 @@ export const ConnectWalletButton = () => {
                   <div className="bg-purple-900 bg-opacity-50 p-6 rounded-lg border border-purple-400">
                     <h3 className="font-pixel text-2xl text-white mb-4">About Curtis Hideaway</h3>
                     <p className="text-white font-pixel leading-relaxed">
-                      Curtis Hideaway is a cozy, vibrant scene capturing the Minis' good vibes on Ape Chain, 
-                      featuring Curtis and friends in their post-Ape Fest chill zone.
-                    </p>
+      Curtis Hideaway is a cozy, vibrant scene capturing the Minis&apos; good vibes on Ape Chain,
+      featuring Curtis and friends in their post-Ape Fest chill zone.
+    </p>
                   </div>
 
                   {connected && ownedTokenIds.length > 0 && (

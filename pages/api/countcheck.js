@@ -1,4 +1,4 @@
-import connectDB from '../../lib/dbConnect'; // Adjust path as needed
+import connectDB from './dbconnect'; // Adjust path as needed
 import BurnRecord from '../../lib/models';
 
 export default async function handler(req, res) {

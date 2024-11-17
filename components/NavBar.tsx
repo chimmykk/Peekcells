@@ -251,6 +251,17 @@ return (
     BURN YOUR MINI APE CHAIN PIECES AND RECEIVE CURTIS HIDEAWAY, 
     A LIMITED-EDITION NFT (ONLY 100 AVAILABLE IN TOTAL)!
   </p>
+
+  <br>
+  </br>
+  <p
+  className="font-pixel text-white text-2xl mb-8 uppercase"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  DEPENDING ON HOW MANY YOU BURN, YOU CAN UNLOCK ADDITIONAL REWARDS:
+</p>
+
+
   <ul className="space-y-2">
     <li>• BURN 5 MINIS: RECEIVE THE EXCLUSIVE CURTIS HIDEAWAY NFT</li>
     <li>• BURN 15 MINIS: GET CURTIS HIDEAWAY + A BASED MINIS NFT</li>
@@ -259,6 +270,15 @@ return (
     </li>
   </ul>
 </div>
+<br>
+</br>
+<p
+  className="font-pixel text-white text-sm mb-8 uppercase"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  ACT FAST—CURTIS HIDEAWAY IS LIMITED, AND THIS PIECE IS YOUR GATEWAY TO AN ICONIC MOMENT FOR MINIS ON APE CHAIN.
+</p>
+
 
           </div>
         </div>

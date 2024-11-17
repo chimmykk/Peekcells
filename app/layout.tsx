@@ -17,9 +17,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="bg-[#F4F4F5] px-3 py-2 md:py-3 lg:px-0 lg:max-w-screen-xl mx-auto">
+      <body className="bg-[#F4F4F5] min-h-screen w-full m-0 p-0 flex flex-col">
         <NavBar />
-        {children}
+        <div className="flex-grow">{children}</div>
       </body>
     </html>
   );

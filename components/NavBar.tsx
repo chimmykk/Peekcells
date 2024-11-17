@@ -256,7 +256,7 @@ return (
   </br>
   <p
   className="font-pixel text-white text-2xl mb-8 uppercase"
-  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold', color: 'white' }}
 >
   DEPENDING ON HOW MANY YOU BURN, YOU CAN UNLOCK ADDITIONAL REWARDS:
 </p>
@@ -274,7 +274,7 @@ return (
 </br>
 <p
   className="font-pixel text-white text-sm mb-8 uppercase"
-  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold', color: 'white' }}
 >
   ACT FAST—CURTIS HIDEAWAY IS LIMITED, AND THIS PIECE IS YOUR GATEWAY TO AN ICONIC MOMENT FOR MINIS ON APE CHAIN.
 </p>

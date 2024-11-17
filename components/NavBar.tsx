@@ -233,7 +233,7 @@ return (
             <img 
               src="./logo.png" 
               alt="Mini Ape" 
-              className="rounded-lg border-4 border-black"
+                       className="rounded-lg transform transition-transform hover:scale-110"
             />
           </div>
           <div className="space-y-6">
@@ -323,14 +323,12 @@ This event marks Peekcell’s first step onto Ape Chain, bringing Based Minis in
 
 
 </p>
-
-
           </div>
           <div>
             <img 
               src="./curtis.png" 
               alt="Curtis Hideaway" 
-              className="rounded-lg border-4 border-white"
+               className="rounded-lg ml-auto transform transition-transform hover:scale-110"
             />
           </div>
         </div>
@@ -377,14 +375,18 @@ This event marks Peekcell’s first step onto Ape Chain, bringing Based Minis in
                   </Button>
                 </div>
 
-                <div className="mt-8 font-pixel text-white text-sm">
-                  <p>HOW TO BURN:</p>
-                  <ol className="text-left list-decimal pl-6 space-y-2 mt-2">
-                    <li>CHOOSE YOUR BURN TIER: SELECT HOW MANY MINI APE CHAIN NFTS YOU WANT TO BURN—5, 15, OR 25.</li>
-                    <li>BURN YOUR MINIS: CLICK BURN TO SEND THE SELECTED NFTS TO THE BURN ADDRESS.</li>
-                    <li>CLAIM YOUR REWARD: CLICK CLAIM TOKEN TO RECEIVE YOUR NEW CURTIS HIDEAWAY NFT.</li>
-                  </ol>
-                </div>
+                <div
+  className="mt-8 font-pixel text-sm"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold', color: 'white' }}
+>
+  <p>HOW TO BURN:</p>
+  <ol className="text-left list-decimal pl-6 space-y-2 mt-2">
+    <li>CHOOSE YOUR BURN TIER: SELECT HOW MANY MINI APE CHAIN NFTS YOU WANT TO BURN—5, 15, OR 25.</li>
+    <li>BURN YOUR MINIS: CLICK BURN TO SEND THE SELECTED NFTS TO THE BURN ADDRESS.</li>
+    <li>CLAIM YOUR REWARD: CLICK CLAIM TOKEN TO RECEIVE YOUR NEW CURTIS HIDEAWAY NFT.</li>
+  </ol>
+</div>
+
               </div>
             )}
           </div>

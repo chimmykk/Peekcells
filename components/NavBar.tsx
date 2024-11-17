@@ -393,7 +393,7 @@ This event marks Peekcell’s first step onto Ape Chain, bringing Based Minis in
           {/* Image section */}
           <div className="text-center">
             <img 
-              src="./burn.png" 
+              src="./burn.gif" 
               alt="Curtis Hideaway" 
               className="rounded-lg inline-block w-48 md:w-64"
             />

@@ -6,6 +6,8 @@ import { useMetaMask } from "../components/metamask"; // Ensure proper export/im
 import { formatAddress } from "../lib/utils";
 import WalletIcon from "../public/icons/WalletIcon"; // Ensure proper export/import
 import { ethers } from "ethers";
+import '@fontsource/micro-5';
+
 
 // The contract address for the ERC721 token
 const contractAddress = "0xd8e909bB2a1733AAA95E62d6257a87fd0b4064A0";
@@ -175,166 +177,222 @@ export const ConnectWalletButton = () => {
     }
   }, [account]);
 
-  return (
-    <div className="min-h-screen w-full bg-[#8787FF]">
-      {/* Hero Section */}
-      <div className="container mx-auto px-4 pt-8">
-        <div className="flex justify-end mb-8">
-          {connected ? (
-            <Popover>
-              <PopoverTrigger>
-                <Button className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2">
-                  {account ? formatAddress(account) : "No Account"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="bg-white border-2 border-black">
-                <button
-                  onClick={disconnect}
-                  className="w-full px-4 py-2 text-black font-pixel hover:bg-gray-100"
-                >
-                  Disconnect
-                </button>
-              </PopoverContent>
-            </Popover>
-          ) : (
-            <Button 
-              onClick={connect}
-              className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
-            >
-              Connect wallet
-            </Button>
-          )}
-        </div>
-  
-        <div className="text-center mb-16">
-          <h1 className="font-pixel text-6xl text-white mb-8">
-            MINI APE CHAIN BURN
-          </h1>
-          <p className="font-pixel text-white max-w-3xl mx-auto leading-relaxed text-lg">
-            GET READY FOR SOMETHING SPECIAL! THE MINI APE CHAIN BURN EVENT IS YOUR CHANCE TO 
-            EXCHANGE YOUR MINI APE CHAIN NFTS FOR EXCLUSIVE REWARDS WHILE CELEBRATING THE MINIS' 
-            ARRIVAL ON APE CHAIN.
-          </p>
-        </div>
+return (
+  <div className="min-h-screen w-full bg-[#8787FF]">
+    {/* Hero Section */}
+    <div className="container mx-auto px-4 pt-8">
+      <div className="flex justify-end mb-8">
+        {connected ? (
+          <Popover>
+            <PopoverTrigger>
+              <Button className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2">
+                {account ? formatAddress(account) : "No Account"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="bg-white border-2 border-black">
+              <button
+                onClick={disconnect}
+                className="w-full px-4 py-2 text-black font-pixel hover:bg-gray-100"
+              >
+                Disconnect
+              </button>
+            </PopoverContent>
+          </Popover>
+        ) : (
+          <Button 
+            onClick={connect}
+            className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
+          >
+            Connect wallet
+          </Button>
+        )}
       </div>
-  
-      {/* How It Works Section */}
-      <div className="bg-[#FFD15B] py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div>
-              <img 
-                src="./logo.png" 
-                alt="Mini Ape" 
-                className="rounded-lg border-4 border-black"
-              />
-            </div>
-            <div className="space-y-6">
-              <h2 className="font-pixel text-3xl text-black mb-4">HOW IT WORKS:</h2>
-              <div className="space-y-4 font-pixel">
-                <p>BURN YOUR MINI APE CHAIN PIECES AND RECEIVE CURTIS HIDEAWAY, 
-                   A LIMITED-EDITION NFT (ONLY 100 AVAILABLE IN TOTAL)!</p>
-                <ul className="space-y-2">
-                  <li>• BURN 5 MINIS: RECEIVE THE EXCLUSIVE CURTIS HIDEAWAY NFT</li>
-                  <li>• BURN 15 MINIS: GET CURTIS HIDEAWAY + A BASED MINIS NFT</li>
-                  <li>• BURN 25 MINIS: RECEIVE CURTIS HIDEAWAY + A BASED MINIS NFT + 
-                      AN ENTRY INTO THE RAFFLE FOR A CUSTOM MINI ANIMATION</li>
-                </ul>
-              </div>
-            </div>
+
+      <div className="text-center mb-16">
+      <h1 className="font-pixel text-8xl text-white mb-8">
+  MINI APE CHAIN BURN
+</h1>
+
+<p
+  className="text-white max-w-3xl mx-auto leading-relaxed text-lg"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  GET READY FOR SOMETHING SPECIAL! THE MINI APE CHAIN BURN EVENT IS YOUR CHANCE TO 
+  EXCHANGE YOUR MINI APE CHAIN NFTS FOR EXCLUSIVE REWARDS WHILE CELEBRATING THE MINIS' 
+  ARRIVAL ON APE CHAIN.
+</p>
+
+      </div>
+    </div>
+
+    {/* How It Works Section */}
+    <div className="bg-[#FFD15B] py-16">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div>
+            <img 
+              src="./logo.png" 
+              alt="Mini Ape" 
+              className="rounded-lg border-4 border-black"
+            />
           </div>
-        </div>
-      </div>
-  
-      {/* About Curtis Section */}
-      <div className="bg-[#9B8AC4] py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6">
-              <h2 className="font-pixel text-3xl text-white mb-4">ABOUT CURTIS HIDEAWAY</h2>
-              <p className="font-pixel text-white leading-relaxed">
-                CURTIS HIDEAWAY IS A COZY, VIBRANT SCENE CAPTURING THE MINIS' GOOD VIBES 
-                ON APE CHAIN, FEATURING CURTIS AND FRIENDS IN THEIR POST-APE FEST CHILL ZONE.
-              </p>
-            </div>
-            <div>
-              <img 
-                src="./curtis.png" 
-                alt="Curtis Hideaway" 
-                className="rounded-lg border-4 border-white"
-              />
-            </div>
+          <div className="space-y-6">
+          <h2 
+  className="font-pixel text-3xl mb-4" 
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold', color: 'white' }}
+>
+  HOW IT WORKS:
+</h2>
+            <div 
+  className="space-y-4" 
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold', color: 'white' }}
+>
+  <p>
+    BURN YOUR MINI APE CHAIN PIECES AND RECEIVE CURTIS HIDEAWAY, 
+    A LIMITED-EDITION NFT (ONLY 100 AVAILABLE IN TOTAL)!
+  </p>
+  <ul className="space-y-2">
+    <li>• BURN 5 MINIS: RECEIVE THE EXCLUSIVE CURTIS HIDEAWAY NFT</li>
+    <li>• BURN 15 MINIS: GET CURTIS HIDEAWAY + A BASED MINIS NFT</li>
+    <li>• BURN 25 MINIS: RECEIVE CURTIS HIDEAWAY + A BASED MINIS NFT + 
+        AN ENTRY INTO THE RAFFLE FOR A CUSTOM MINI ANIMATION
+    </li>
+  </ul>
+</div>
+
           </div>
-        </div>
-      </div>
-  
-      {/* Burn Section */}
-      <div className="bg-[#66CDAA] py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
-            <div className="text-center">
-              <h2 className="font-pixel text-4xl text-white mb-8">START YOUR BURN NOW</h2>
-              
-              {connected && (
-                <div className="max-w-md mx-auto space-y-4">
-                  <select
-                    onChange={(e) => handleSelectTokens(parseInt(e.target.value))}
-                    className="w-full p-3 bg-white text-black font-pixel border-2 border-black rounded-none"
-                  >
-                    <option value="0">SELECT NUMBER OF TOKENS</option>
-                    <option value="5">5 TOKENS</option>
-                    <option value="15">15 TOKENS</option>
-                    <option value="25">25 TOKENS</option>
-                  </select>
-  
-                  <div className="flex justify-center gap-4">
-                    <Button 
-                      onClick={batchTransferTokens}
-                      disabled={selectionCount === 0}
-                      className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
-                    >
-                      BURN SELECTED
-                    </Button>
-                    <Button 
-                      onClick={claimToken}
-                      className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
-                    >
-                      CLAIM TOKEN
-                    </Button>
-                  </div>
-  
-                  <div className="mt-8 font-pixel text-white text-sm">
-                    <p>HOW TO BURN:</p>
-                    <ol className="text-left list-decimal pl-6 space-y-2 mt-2">
-                      <li>CHOOSE YOUR BURN TIER: SELECT HOW MANY MINI APE CHAIN NFTS YOU WANT TO BURN—5, 15, OR 25.</li>
-                      <li>BURN YOUR MINIS: CLICK BURN TO SEND THE SELECTED NFTS TO THE BURN ADDRESS.</li>
-                      <li>CLAIM YOUR REWARD: CLICK CLAIM TOKEN TO RECEIVE YOUR NEW CURTIS HIDEAWAY NFT.</li>
-                    </ol>
-                  </div>
-                </div>
-              )}
-            </div>
-            {/* Image section */}
-            <div className="text-center">
-              <img 
-                src="./burn.png" 
-                alt="Curtis Hideaway" 
-                className="rounded-lg inline-block w-48 md:w-64"
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-  
-      {/* Footer Note */}
-      <div className="bg-[#66CDAA] pb-16">
-        <div className="container mx-auto px-4 text-center">
-          <p className="font-pixel text-white text-sm mb-8">
-            * FOR THOSE BURNING 15 OR 25 MINIS, I'LL PERSONALLY SEND THE BASED MINIS NFT TO YOUR WALLET AFTER THE BURN EVENT. IT'S THAT SIMPLE! LET'S GO.
-          </p>
         </div>
       </div>
     </div>
-  );
-}  
+
+    {/* About Curtis Section */}
+    <div className="bg-[#9B8AC4] py-16">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <div className="space-y-6">
+          <h2
+  className="font-pixel text-3xl text-white mb-4"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  ABOUT CURTIS HIDEAWAY
+</h2>
+
+<p
+  className="font-pixel text-white leading-relaxed mb-4"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  Curtis Hideaway is a cozy, vibrant scene capturing the Minis’ good vibes on Ape Chain, featuring Curtis and friends in their post-Ape Fest chill zone. Each detail is a nod to the energy and creativity of the Based Minis community, and this piece is exclusively available through the burn event.
+</p>
+<br>
+
+</br>
+
+<h2
+  className="font-pixel text-3xl text-white mb-4"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+ WHY JOIN THIS BURNED?
+</h2> 
+<p
+  className="font-pixel text-white leading-relaxed mb-4"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+
+
+This event marks Peekcell’s first step onto Ape Chain, bringing Based Minis into a new world. It’s not just about owning exclusive art; it’s about being part of this milestone moment and celebrating the Minis spreading good vibes across collections and chains.
+
+
+</p>
+
+
+          </div>
+          <div>
+            <img 
+              src="./curtis.png" 
+              alt="Curtis Hideaway" 
+              className="rounded-lg border-4 border-white"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Burn Section */}
+    <div className="bg-[#66CDAA] py-16">
+      <div className="container mx-auto px-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
+          <div className="text-center">
+          <h2
+  className="font-pixel text-4xl text-white mb-8"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  START YOUR BURN NOW
+</h2>
+
+            {connected && (
+              <div className="max-w-md mx-auto space-y-4">
+                <select
+                  onChange={(e) => handleSelectTokens(parseInt(e.target.value))}
+                  className="w-full p-3 bg-white text-black font-pixel border-2 border-black rounded-none"
+                >
+                  <option value="0">SELECT NUMBER OF TOKENS</option>
+                  <option value="5">5 TOKENS</option>
+                  <option value="15">15 TOKENS</option>
+                  <option value="25">25 TOKENS</option>
+                </select>
+
+                <div className="flex justify-center gap-4">
+                  <Button 
+                    onClick={batchTransferTokens}
+                    disabled={selectionCount === 0}
+                    className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
+                  >
+                    BURN SELECTED
+                  </Button>
+                  <Button 
+                    onClick={claimToken}
+                    className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
+                  >
+                    CLAIM TOKEN
+                  </Button>
+                </div>
+
+                <div className="mt-8 font-pixel text-white text-sm">
+                  <p>HOW TO BURN:</p>
+                  <ol className="text-left list-decimal pl-6 space-y-2 mt-2">
+                    <li>CHOOSE YOUR BURN TIER: SELECT HOW MANY MINI APE CHAIN NFTS YOU WANT TO BURN—5, 15, OR 25.</li>
+                    <li>BURN YOUR MINIS: CLICK BURN TO SEND THE SELECTED NFTS TO THE BURN ADDRESS.</li>
+                    <li>CLAIM YOUR REWARD: CLICK CLAIM TOKEN TO RECEIVE YOUR NEW CURTIS HIDEAWAY NFT.</li>
+                  </ol>
+                </div>
+              </div>
+            )}
+          </div>
+          {/* Image section */}
+          <div className="text-center">
+            <img 
+              src="./burn.png" 
+              alt="Curtis Hideaway" 
+              className="rounded-lg inline-block w-48 md:w-64"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Footer Note */}
+    <div className="bg-[#66CDAA] pb-16">
+      <div className="container mx-auto px-4 text-center">
+      <p
+  className="font-pixel text-white text-sm mb-8"
+  style={{ fontFamily: 'Roboto Condensed, sans-serif', fontWeight: 'bold' }}
+>
+  * FOR THOSE BURNING 15 OR 25 MINIS, I'LL PERSONALLY SEND THE BASED MINIS NFT TO YOUR WALLET AFTER THE BURN EVENT. IT'S THAT SIMPLE! LET'S GO.
+</p>
+
+      </div>
+    </div>
+  </div>
+);
+}
 export default ConnectWalletButton;

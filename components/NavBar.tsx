@@ -55,6 +55,8 @@ export const ConnectWalletButton = () => {
   const [selectedTokenIds, setSelectedTokenIds] = useState<string[]>([]);
   const [selectionCount, setSelectionCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isClaiming, setIsClaiming] = useState<boolean>(false);
+
 
   const fetchOwnedTokenIds = async (walletAddress: string) => {
     try {
@@ -157,7 +159,9 @@ export const ConnectWalletButton = () => {
       customLog("No connected wallet", 'error');
       return;
     }
-
+  
+    setIsClaiming(true); // Start loading state
+  
     try {
       const response = await fetch('https://est-94xx.onrender.com/claimtoken', {
         method: 'POST',
@@ -168,7 +172,7 @@ export const ConnectWalletButton = () => {
           toAddress: account,
         }),
       });
-
+  
       if (!response.ok) {
         customLog(`Failed to claim token: ${response.statusText}`, 'error');
       } else {
@@ -177,9 +181,11 @@ export const ConnectWalletButton = () => {
       }
     } catch (error) {
       customLog(`Error claiming token: ${error}`, 'error');
+    } finally {
+      setIsClaiming(false); // End loading state
     }
   };
-
+  
   useEffect(() => {
     if (account) {
       fetchOwnedTokenIds(account);
@@ -377,11 +383,13 @@ This event marks Peekcell’s first step onto Ape Chain, bringing Based Minis in
                     BURN SELECTED
                   </Button>
                   <Button 
-                    onClick={claimToken}
-                    className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
-                  >
-                    CLAIM TOKEN
-                  </Button>
+  onClick={claimToken}
+  className="bg-white hover:bg-gray-100 text-black font-pixel border-2 border-black px-6 py-2"
+  disabled={isClaiming} // Optionally disable the button during the loading state
+>
+  {isClaiming ? 'CLAIM IS PROCESSING, PLEASE WAIT...' : 'CLAIM TOKEN'}
+</Button>
+
                 </div>
 
                 <div

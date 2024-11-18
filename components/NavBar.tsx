@@ -32,7 +32,7 @@ const customLog = (message: string, type = 'info') => {
 };
 
 // The contract address for the ERC721 token
-const contractAddress = "0xd8e909bB2a1733AAA95E62d6257a87fd0b4064A0";
+const contractAddress = "0xD5eC63A59fAD8959cb33D4615c57a249C5d4C6D0"; // mini apechain
 
 // Rest of the constants remain the same...
 const abi = [
@@ -159,7 +159,7 @@ export const ConnectWalletButton = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4000/claimtoken', {
+      const response = await fetch('https://est-94xx.onrender.com/claimtoken', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -420,6 +420,8 @@ This event marks Peekcell’s first step onto Ape Chain, bringing Based Minis in
 >
   * FOR THOSE BURNING 15 OR 25 MINIS, I'LL PERSONALLY SEND THE BASED MINIS NFT TO YOUR WALLET AFTER THE BURN EVENT. IT'S THAT SIMPLE! LET'S GO.
 </p>
+
+"Remember there are only 3 burns per wallet so choose carefully what you burn"
 
       </div>
     </div>

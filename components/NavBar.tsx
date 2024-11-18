@@ -2,111 +2,121 @@
 import { Button } from "./ui/button";
 import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
 import { useState, useEffect } from "react";
-import { useMetaMask } from "../components/metamask"; // Ensure proper export/import
+import { useMetaMask } from "../components/metamask";
 import { formatAddress } from "../lib/utils";
-import WalletIcon from "../public/icons/WalletIcon"; // Ensure proper export/import
 import { ethers } from "ethers";
+import { Alert, AlertDescription } from "./alert";
 import '@fontsource/micro-5';
 
+// Custom logging utility
+const customLog = (message: string, type = 'info') => {
+  console.log(message);
+  // Create and show alert
+  const alertElement = document.createElement('div');
+  alertElement.style.position = 'fixed';
+  alertElement.style.top = '20px';
+  alertElement.style.right = '20px';
+  alertElement.style.zIndex = '9999';
+  alertElement.style.maxWidth = '400px';
+  alertElement.innerHTML = `
+    <div class="bg-white border-2 border-black p-4 rounded shadow-lg mb-2">
+      <p class="font-pixel text-sm">${message}</p>
+    </div>
+  `;
+  document.body.appendChild(alertElement);
+  
+  // Remove alert after 5 seconds
+  setTimeout(() => {
+    alertElement.remove();
+  }, 5000);
+};
 
 // The contract address for the ERC721 token
 const contractAddress = "0xd8e909bB2a1733AAA95E62d6257a87fd0b4064A0";
 
-// ERC-721 standard ABI for ownerOf and totalSupply functions
+// Rest of the constants remain the same...
 const abi = [
   "function ownerOf(uint256 tokenId) view returns (address)",
   "function totalSupply() view returns (uint256)",
   "function setApprovalForAll(address operator, bool approved) external",
 ];
 
-// The batch transfer ABI for ERC721BatchTransfer contract
 const ERC721_BATCH_TRANSFER_ABI = [
   "function batchTransferToSingleWallet(address erc721Contract, address to, uint256[] calldata tokenIds) external",
 ];
 
-// The ERC721BatchTransfer contract address (set to dead address for burning)
-const batchTransferAddress = "0xB508EE6cbddF4a1414abdDB26D467eAc5a9F5B8b"; // Replace with actual address
-
-// Connect to the ApeChain provider using rpc.apechain.com
-const provider = new ethers.JsonRpcProvider("https://rpc.apechain.com"); // Use the correct RPC endpoint
+const batchTransferAddress = "0xB508EE6cbddF4a1414abdDB26D467eAc5a9F5B8b";
+const provider = new ethers.JsonRpcProvider("https://rpc.apechain.com");
 const contract = new ethers.Contract(contractAddress, abi, provider);
 
 export const ConnectWalletButton = () => {
   const { account, signer, connected, connect, disconnect } = useMetaMask();
   const [ownedTokenIds, setOwnedTokenIds] = useState<string[]>([]);
   const [selectedTokenIds, setSelectedTokenIds] = useState<string[]>([]);
-  const [selectionCount, setSelectionCount] = useState<number>(0); // To track the number of tokens to select
-  const [isLoading, setIsLoading] = useState<boolean>(false); // Add this line to define isLoading
+  const [selectionCount, setSelectionCount] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const fetchOwnedTokenIds = async (walletAddress: string) => {
     try {
       const totalSupply = await contract.totalSupply();
-      console.log(`Total supply of tokens: ${totalSupply}`);
+      customLog(`Total supply of tokens: ${totalSupply}`);
   
-      // Ensure to handle BigNumber properly
       const supply = totalSupply.toNumber ? totalSupply.toNumber() : parseInt(totalSupply.toString(), 10);
-      
-      const tokenIds = Array.from({ length: supply }, (_, i) => i + 1); // Generate an array of token IDs
+      const tokenIds = Array.from({ length: supply }, (_, i) => i + 1);
   
-      // Fetch all token owners in parallel
       const ownerPromises = tokenIds.map(async (tokenId) => {
         try {
           const owner = await contract.ownerOf(tokenId);
           return { tokenId, owner };
         } catch (error) {
-          console.error(`Error fetching owner for token ID ${tokenId}:`, error);
-          return null; // Return null for tokens that fail
+          customLog(`Error fetching owner for token ID ${tokenId}: ${error}`, 'error');
+          return null;
         }
       });
   
       const ownerResults = await Promise.all(ownerPromises);
-  
-      // Filter out null results and collect owned tokens
       const ownedTokens = ownerResults
-        .filter((result): result is { tokenId: number; owner: any } => result !== null && result.owner.toLowerCase() === walletAddress.toLowerCase())
+        .filter((result): result is { tokenId: number; owner: any } => 
+          result !== null && result.owner.toLowerCase() === walletAddress.toLowerCase())
         .map((result) => result.tokenId.toString());
   
       setOwnedTokenIds(ownedTokens);
   
       if (ownedTokens.length > 0) {
-        console.log(`Token IDs owned by the address: ${ownedTokens.join(", ")}`);
+        customLog(`Token IDs owned by the address: ${ownedTokens.join(", ")}`);
       } else {
-        console.log("No tokens owned by this address.");
+        customLog("No tokens owned by this address.");
       }
     } catch (error) {
-      console.error("Error fetching total supply or token ownership:", error);
+      customLog(`Error fetching total supply or token ownership: ${error}`, 'error');
     }
   };
-  
-
 
   const handleSelectTokens = (count: number) => {
     setSelectionCount(count);
-    setSelectedTokenIds(ownedTokenIds.slice(0, count)); // Select the first `count` tokens
+    setSelectedTokenIds(ownedTokenIds.slice(0, count));
+    customLog(`Selected ${count} tokens for burning`);
   };
 
   const batchTransferTokens = async () => {
     if (!signer) {
-      console.error("Signer not available, please connect wallet");
+      customLog("Signer not available, please connect wallet", 'error');
       return;
     }
 
     if (selectedTokenIds.length === 0) {
-      console.error("No tokens selected for transfer");
+      customLog("No tokens selected for transfer", 'error');
       return;
     }
 
     try {
-  
       const nftContract = new ethers.Contract(contractAddress, abi, signer);
       const approvalTx = await nftContract.setApprovalForAll(batchTransferAddress, true);
       await approvalTx.wait();
-      console.log("ERC721BatchTransfer contract approved to manage all tokens");
+      customLog("ERC721BatchTransfer contract approved to manage all tokens");
 
-      // Transfer tokens in a batch
       const ERC721BatchTransfer = new ethers.Contract(batchTransferAddress, ERC721_BATCH_TRANSFER_ABI, signer);
-      const toAddress = "0x000000000000000000000000000000000000dEaD"; // Replace with actual address for burning or other destination
-
+      const toAddress = "0x000000000000000000000000000000000000dEaD";
       const tokenIds = selectedTokenIds.map(id => parseInt(id));
 
       const transferTx = await ERC721BatchTransfer.batchTransferToSingleWallet(
@@ -116,10 +126,9 @@ export const ConnectWalletButton = () => {
       );
       await transferTx.wait();
 
-      console.log(`Tokens ${selectedTokenIds.join(", ")} successfully transferred to ${toAddress}`);
-      setSelectedTokenIds([]); // Clear selected tokens after transfer
+      customLog(`Tokens ${selectedTokenIds.join(", ")} successfully transferred to ${toAddress}`);
+      setSelectedTokenIds([]);
 
-      // Send a request to update the burn count
       const response = await fetch('api/incrementcount', {
         method: 'POST',
         headers: {
@@ -132,42 +141,42 @@ export const ConnectWalletButton = () => {
       });
 
       if (!response.ok) {
-        console.error("Failed to increment burn count:", response.statusText);
+        customLog(`Failed to increment burn count: ${response.statusText}`, 'error');
       } else {
         const data = await response.json();
-        console.log("Burn count updated successfully:", data);
+        customLog("Burn count updated successfully");
       }
 
     } catch (error) {
-      console.error("Error during batch transfer:", error);
+      customLog(`Error during batch transfer: ${error}`, 'error');
     }
   };
 
   const claimToken = async () => {
     if (!account) {
-      console.error("No connected wallet");
+      customLog("No connected wallet", 'error');
       return;
     }
 
     try {
-      const response = await fetch('https://est-94xx.onrender.com/claimtoken', {
+      const response = await fetch('http://localhost:4000/claimtoken', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          toAddress: account, // Pass the connected wallet address
+          toAddress: account,
         }),
       });
 
       if (!response.ok) {
-        console.error("Failed to claim token:", response.statusText);
+        customLog(`Failed to claim token: ${response.statusText}`, 'error');
       } else {
         const data = await response.json();
-        console.log("Token claimed successfully:", data);
+        customLog("Token claimed successfully");
       }
     } catch (error) {
-      console.error("Error claiming token:", error);
+      customLog(`Error claiming token: ${error}`, 'error');
     }
   };
 

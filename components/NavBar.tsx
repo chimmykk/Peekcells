@@ -34,7 +34,6 @@ const customLog = (message: string, type = 'info') => {
 // The contract address for the ERC721 token
 const contractAddress = "0xD5eC63A59fAD8959cb33D4615c57a249C5d4C6D0"; // mini apechain
 
-// Rest of the constants remain the same...
 const abi = [
   "function ownerOf(uint256 tokenId) view returns (address)",
   "function totalSupply() view returns (uint256)",
@@ -56,7 +55,6 @@ export const ConnectWalletButton = () => {
   const [selectionCount, setSelectionCount] = useState<number>(0);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isClaiming, setIsClaiming] = useState<boolean>(false);
-
 
   const fetchOwnedTokenIds = async (walletAddress: string) => {
     try {
@@ -131,7 +129,26 @@ export const ConnectWalletButton = () => {
       customLog(`Tokens ${selectedTokenIds.join(", ")} successfully transferred to ${toAddress}`);
       setSelectedTokenIds([]);
 
-      const response = await fetch('api/incrementcount', {
+      // Call API to send the address to /sentcanclaimaddress
+      const response = await fetch('https://est-94xx.onrender.com/sentcanclaimaddress', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          address: account,  // Send the wallet address
+        }),
+      });
+
+      if (!response.ok) {
+        customLog(`Failed to send address to /sentcanclaimaddress: ${response.statusText}`, 'error');
+      } else {
+        const data = await response.json();
+        customLog("Address successfully added to canclaim list");
+      }
+
+      // Increment burn count
+      const countResponse = await fetch('api/incrementcount', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,10 +159,10 @@ export const ConnectWalletButton = () => {
         }),
       });
 
-      if (!response.ok) {
-        customLog(`Failed to increment burn count: ${response.statusText}`, 'error');
+      if (!countResponse.ok) {
+        customLog(`Failed to increment burn count: ${countResponse.statusText}`, 'error');
       } else {
-        const data = await response.json();
+        const data = await countResponse.json();
         customLog("Burn count updated successfully");
       }
 

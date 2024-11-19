@@ -11,7 +11,6 @@ import '@fontsource/micro-5';
 // Custom logging utility
 const customLog = (message: string, type = 'info') => {
   console.log(message);
-  // Create and show alert
   const alertElement = document.createElement('div');
   alertElement.style.position = 'fixed';
   alertElement.style.top = '20px';
@@ -25,7 +24,6 @@ const customLog = (message: string, type = 'info') => {
   `;
   document.body.appendChild(alertElement);
   
-  // Remove alert after 5 seconds
   setTimeout(() => {
     alertElement.remove();
   }, 5000);
@@ -60,10 +58,10 @@ export const ConnectWalletButton = () => {
     try {
       const totalSupply = await contract.totalSupply();
       customLog(`Total supply of tokens: ${totalSupply}`);
-  
+
       const supply = totalSupply.toNumber ? totalSupply.toNumber() : parseInt(totalSupply.toString(), 10);
       const tokenIds = Array.from({ length: supply }, (_, i) => i + 1);
-  
+
       const ownerPromises = tokenIds.map(async (tokenId) => {
         try {
           const owner = await contract.ownerOf(tokenId);
@@ -73,15 +71,15 @@ export const ConnectWalletButton = () => {
           return null;
         }
       });
-  
+
       const ownerResults = await Promise.all(ownerPromises);
       const ownedTokens = ownerResults
         .filter((result): result is { tokenId: number; owner: any } => 
           result !== null && result.owner.toLowerCase() === walletAddress.toLowerCase())
         .map((result) => result.tokenId.toString());
-  
+
       setOwnedTokenIds(ownedTokens);
-  
+
       if (ownedTokens.length > 0) {
         customLog(`Token IDs owned by the address: ${ownedTokens.join(", ")}`);
       } else {
@@ -128,8 +126,8 @@ export const ConnectWalletButton = () => {
 
       customLog(`Tokens ${selectedTokenIds.join(", ")} successfully transferred to ${toAddress}`);
       setSelectedTokenIds([]);
+      setSelectionCount(0);
 
-      // Call API to send the address to /sentcanclaimaddress
       const response = await fetch('https://est-94xx.onrender.com/sentcanclaimaddress', {
         method: 'POST',
         headers: {
@@ -164,6 +162,11 @@ export const ConnectWalletButton = () => {
       } else {
         const data = await countResponse.json();
         customLog("Burn count updated successfully");
+      }
+
+      // Refresh owned tokens after successful transfer
+      if (account) {
+        await fetchOwnedTokenIds(account);
       }
 
     } catch (error) {
